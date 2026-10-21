@@ -3,6 +3,6 @@
 //   Supabase › Project Settings › API (ou Data API / API Keys).
 // Nunca cole aqui a chave "service_role" / "secret": ela dá acesso total ao banco.
 window.E360_CONFIG = {
-  url: 'COLE_AQUI_O_PROJECT_URL',
-  chave: 'COLE_AQUI_A_CHAVE_PUBLICA'
+  url: 'https://ojlmvrtybaymxqbjmnha.supabase.co',
+  chave: 'sb_publishable_TshHJgHClR_geGi57NwiNg__w1pEA0q'
 };
