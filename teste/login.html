@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Engenharia 360 · Entrar</title>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>[TESTE] Engenharia 360 · Entrar</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://*.supabase.co; base-uri 'none'; form-action 'none'">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap">
@@ -78,7 +78,7 @@ input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:tran
   </main>
 </div>
 <script src="config.js"></script>
-<script src="supabase.js"></script>
+<script src="../supabase.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const MOTIVOS = {
@@ -120,5 +120,6 @@ $('#f-login').addEventListener('submit', async e=>{
   }catch(err){ msg('#m-login','bad',err.message); btn.disabled=false; }
 });
 </script>
+<div style="position:fixed;left:12px;bottom:12px;z-index:50;background:#B7791F;color:#fff;font:600 12px/1 system-ui,sans-serif;letter-spacing:.06em;padding:6px 10px;border-radius:6px">AMBIENTE DE TESTE</div>
 </body>
 </html>
