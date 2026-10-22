@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Engenharia 360 · Entrar</title>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>[TESTE] Engenharia 360 · Entrar</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://*.supabase.co; base-uri 'none'; form-action 'none'">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap">
@@ -54,7 +54,7 @@ input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:tran
   <aside class="brand">
     <div class="logo"><div class="dots" aria-hidden="true"><i></i><i class="h"></i><i></i><i class="h"></i><i></i><i class="h"></i><i></i><i class="h"></i><i></i></div>Engenharia 360</div>
     <div>
-      <h1>Modelo de gestão da Engenharia</h1>
+      <h1>Gestão da Diretoria de Engenharia</h1>
       <p>GPD N1 mensal, WBR semanal e plano de ação da Diretoria de Engenharia da Lightwall, num só lugar.</p>
       <div class="pilares"><span>Resultados (GPD)</span><span>Indicadores (WBR)</span><span>Plano de ação</span><span>Pauta da reunião</span></div>
     </div>
@@ -78,7 +78,7 @@ input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:tran
   </main>
 </div>
 <script src="config.js"></script>
-<script src="supabase.js"></script>
+<script src="../supabase.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const MOTIVOS = {
@@ -92,7 +92,7 @@ function msg(id, tipo, t){ const el=$(id); el.className='msg '+tipo; el.textCont
 const C = window.E360_CONFIG || {};
 const perigosa = k => /^sb_secret_/.test(k) || (() => { try { return JSON.parse(atob(String(k).split('.')[1])).role === 'service_role'; } catch (_) { return false; } })();
 const pronto = C.url && C.chave && !/COLE/.test(C.url + C.chave) && !perigosa(C.chave);
-const sb = pronto ? window.supabase.createClient(C.url, C.chave, { auth: { persistSession: true, autoRefreshToken: true, storageKey: 'e360-sessao' } }) : null;
+const sb = pronto ? window.supabase.createClient(C.url, C.chave, { auth: { persistSession: true, autoRefreshToken: true, storageKey: (C.storageKey || 'e360-sessao') } }) : null;
 $('#f-login').hidden = false;
 const mot = new URLSearchParams(location.search).get('motivo');
 if (!pronto) msg('#m-login','bad', C.chave && perigosa(C.chave) ? 'ATENÇÃO: o config.js está com a chave SECRETA do Supabase. Troque pela chave pública.' : 'Configuração pendente: preencha o arquivo config.js.');
@@ -115,10 +115,11 @@ $('#f-login').addEventListener('submit', async e=>{
     }
     const eu = await sb.rpc('eu');
     if (eu.error){ await sb.auth.signOut(); throw new Error(/inativo/i.test(eu.error.message) ? MOTIVOS.inativo[1] : MOTIVOS.semcadastro[1]); }
-    try{ localStorage.setItem('e360-ultimo', String(Date.now())); }catch(_){}
+    try{ localStorage.setItem((C.storageKey || 'e360-sessao') + '-ultimo', String(Date.now())); }catch(_){}
     location.replace('./');
   }catch(err){ msg('#m-login','bad',err.message); btn.disabled=false; }
 });
 </script>
+<div style="position:fixed;left:12px;bottom:12px;z-index:50;background:#B7791F;color:#fff;font:600 12px/1 system-ui,sans-serif;letter-spacing:.06em;padding:6px 10px;border-radius:6px">AMBIENTE DE TESTE</div>
 </body>
 </html>

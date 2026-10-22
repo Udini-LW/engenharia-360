@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Engenharia 360</title>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>[TESTE] Engenharia 360</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://*.supabase.co wss://*.supabase.co; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="same-origin">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -293,7 +293,7 @@ table.pmat tr.alc td{background:var(--accent-soft)}
 <div id="modal" hidden></div>
 
 <script src="config.js"></script>
-<script src="supabase.js"></script>
+<script src="../supabase.js"></script>
 <script>
 /* Carregador: confere a sessão, busca permissões e números no Supabase e só então desenha o painel. */
 (async () => {
@@ -303,14 +303,14 @@ table.pmat tr.alc td{background:var(--accent-soft)}
     if (!C.url || !C.chave || /COLE/.test(C.url + C.chave)) { msg('Configuração pendente: preencha o arquivo config.js com o endereço e a chave pública do Supabase.'); return; }
     const perigosa = k => /^sb_secret_/.test(k) || (() => { try { return JSON.parse(atob(String(k).split('.')[1])).role === 'service_role'; } catch (_) { return false; } })();
     if (perigosa(C.chave)) { msg('ATENÇÃO: o config.js está com a chave SECRETA do Supabase. Troque pela chave pública (anon/publishable) e gere uma nova chave secreta no Supabase.'); return; }
-    const sb = window.supabase.createClient(C.url, C.chave, { auth: { persistSession: true, autoRefreshToken: true, storageKey: 'e360-sessao' } });
+    const sb = window.supabase.createClient(C.url, C.chave, { auth: { persistSession: true, autoRefreshToken: true, storageKey: (C.storageKey || 'e360-sessao') } });
     window.__SB = sb;
     const { data: { session } } = await sb.auth.getSession();
     if (!session) { location.replace('login.html'); return; }
     // sessão encerra após 12 h sem uso
-    let ult = 0; try { ult = +localStorage.getItem('e360-ultimo') || 0; } catch (_) {}
+    let ult = 0; try { ult = +localStorage.getItem((C.storageKey || 'e360-sessao') + '-ultimo') || 0; } catch (_) {}
     if (ult && Date.now() - ult > 12 * 3600e3) { await sb.auth.signOut(); location.replace('login.html?motivo=sessao'); return; }
-    const marca = () => { try { localStorage.setItem('e360-ultimo', String(Date.now())); } catch (_) {} };
+    const marca = () => { try { localStorage.setItem((C.storageKey || 'e360-sessao') + '-ultimo', String(Date.now())); } catch (_) {} };
     marca(); ['click', 'keydown'].forEach(ev => document.addEventListener(ev, marca, { passive: true }));
     const [eu, dados, codigo] = await Promise.all([sb.rpc('eu'), sb.rpc('painel'), sb.rpc('app')]);
     if (eu.error) { await sb.auth.signOut(); location.replace('login.html?motivo=' + (/inativo/i.test(eu.error.message) ? 'inativo' : 'semcadastro')); return; }
@@ -324,5 +324,6 @@ table.pmat tr.alc td{background:var(--accent-soft)}
 })();
 </script>
 
+<div style="position:fixed;left:12px;bottom:12px;z-index:50;background:#B7791F;color:#fff;font:600 12px/1 system-ui,sans-serif;letter-spacing:.06em;padding:6px 10px;border-radius:6px">AMBIENTE DE TESTE</div>
 </body>
 </html>
