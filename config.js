@@ -1,8 +1,8 @@
-// Engenharia 360 · AMBIENTE DE TESTE (projeto engenharia-360-teste)
-// Cole a chave PÚBLICA (publishable / anon) do projeto engenharia-360-teste.
-// Nunca a chave secreta (service_role / sb_secret_).
+// Engenharia 360 · ligação com o Supabase
+// Cole aqui o "Project URL" e a chave PÚBLICA (anon / publishable) do seu projeto Supabase:
+//   Supabase › Project Settings › API (ou Data API / API Keys).
+// Nunca cole aqui a chave "service_role" / "secret": ela dá acesso total ao banco.
 window.E360_CONFIG = {
-  url: 'https://xfinnosvvwcdxomcxlhi.supabase.co',
-  chave: 'COLE_AQUI_A_CHAVE_PUBLICA_DO_TESTE',
-  storageKey: 'e360-teste'
+  url: 'https://ojlmvrtybaymxqbjmnha.supabase.co',
+  chave: 'sb_publishable_TshHJgHClR_geGi57NwiNg__w1pEA0q'
 };
